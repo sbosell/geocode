@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GeoCode Example</h2>
+<p>
+    These examples make an api post back to this project which returns the result.  Try querying springfield on the google or paris to see multiple results.  The red icon is the first result.
+</p>
+
+
+<div>
+Enter Address: @Html.TextBox("Address", "Austin, TX")<br />
+Select Provider: @Html.DropDownList("Providers", (List<SelectListItem>) ViewBag.Providers)  <br />
+Apikey: @Html.TextBox("ApiKey", "", new {@class="nokey"}) <span id="apikeytext">Not Required</span> <br />
+    <button id="doit">Get Coordinates</button>
+</div>
+<div id="results">
+    Latitude: <span id="latitude"></span>
+    Longitude: <span id="longitude"></span>
+</div>
+<div id="message">
+
+</div>
+
+<div id="map" ></div>
+
+<div id="code">
+    Here is the controller that does all the magic:
+
+
+    <!-- code formatted by http://manoli.net/csharpformat/ -->
+<pre class="csharpcode">
+    <span class="kwrd">public</span> ActionResult Query(FormCollection collection)
+        {
+            <span class="kwrd">string</span> key = <span class="kwrd">string</span>.Empty;
+            <span class="kwrd">string</span> query = <span class="kwrd">string</span>.Empty;
+            <span class="kwrd">string</span> provider = <span class="str">"Google"</span>;
+            IGeoProviderConfig config;
+            IGeoProvider GeoProvider = <span class="kwrd">null</span>;
+
+           IGeoCodeResult result = <span class="kwrd">new</span> GeoCodeResult();
+            <span class="kwrd">if</span> (collection.HasKeys() &amp;&amp; collection[<span class="str">"Query"</span>] != <span class="kwrd">null</span> &amp;&amp; collection[<span class="str">"Providers"</span>]!=<span class="kwrd">null</span>)
+            {
+                query = collection[<span class="str">"Query"</span>];
+                <span class="rem">// we have a search</span>
+                provider = collection[<span class="str">"Providers"</span>].Replace(<span class="str">"KEY"</span>, <span class="str">""</span>);
+                <span class="kwrd">if</span> (collection[<span class="str">"Providers"</span>] != <span class="kwrd">null</span> &amp;&amp; collection[<span class="str">"Providers"</span>].ToString().Contains(<span class="str">"KEY"</span>))
+                {
+                    key = collection[<span class="str">"Key"</span>];
+                }
+
+                <span class="kwrd">switch</span> (provider)  {
+                    <span class="kwrd">case</span> <span class="str">"Google"</span>:
+                        config = <span class="kwrd">new</span> GoogleGmapConfig();
+                        GeoProvider = <span class="kwrd">new</span> GoogleGmap(config);
+                    <span class="kwrd">break</span>;
+                    <span class="kwrd">case</span> <span class="str">"Bing"</span>:
+                        config = <span class="kwrd">new</span> BingMapConfig().SetKey(key);
+                        GeoProvider = <span class="kwrd">new</span> BingMap(config);
+                    <span class="kwrd">break</span>;
+                    <span class="kwrd">case</span> <span class="str">"MapQuest"</span>:
+                    config = <span class="kwrd">new</span> MapQuestConfig().SetKey(key);
+                    GeoProvider = <span class="kwrd">new</span> MapQuestMap(config);
+                        <span class="kwrd">break</span>;
+                    <span class="kwrd">case</span> <span class="str">"Open Streets"</span>:
+                        config = <span class="kwrd">new</span> OpenStreetMapConfig().SetUserAgent(<span class="str">"your email here yo"</span>);
+                        GeoProvider = <span class="kwrd">new</span> OpenStreetMap(config);
+                    <span class="kwrd">break</span>;
+                    <span class="kwrd">case</span> <span class="str">"YahooPlaces"</span>:
+                        config = <span class="kwrd">new</span> YahooPlaceFinderConfig().SetKey(key);
+                        GeoProvider = <span class="kwrd">new</span> YahooPlaceFinder(config);
+                    <span class="kwrd">break</span>;
+                    <span class="kwrd">case</span> <span class="str">"CloudMade"</span>:
+                        config = <span class="kwrd">new</span> CloudMadeConfig().SetKey(key);
+                        GeoProvider = <span class="kwrd">new</span> CloudMade(config);
+                    <span class="kwrd">break</span>;
+
+                }
+
+                GeoProvider = GeoProvider != <span class="kwrd">null</span> ? GeoProvider : <span class="kwrd">new</span> GoogleGmap();
+
+                GeoCoder gc = <span class="kwrd">new</span> GeoCoder(GeoProvider);
+
+                result = gc.GetCoordinates(query);
+               
+
+            }
+
+            <span class="kwrd">return</span> Json(result);
+        }</pre>
+
+
+</div>

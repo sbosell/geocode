@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <p><strong>Multiple GeoCoder Service Library - Alpha Release</strong></p>
+<p>This library provides a common way to do a simple geocoding of a location query using various different services. &nbsp;Many geocoding services return other detailed data such as location information, accuracy, etc however the intent of this library at this  time is to provide a simple latitude/longitude of a search query. &nbsp;Possible future versions may expand upon that. &nbsp;</p>
+<p>Common use cases for the use of this library are on projects/sites that request user entered addresses and need to convert those to a latitude and longitude in order to build maps or find locations that are close to a user entered location query.</p>
+<p>This library provides each individual service as well as a general wrapper that can be used to provide a list of services to call in the event one fails. &nbsp;Basically you can define backup services so that if you hit the 2500 per day limit on Google's  Geocoding service, it will fall back to the service of your choice.</p>
+<p>Services Supported:</p>
+<ul>
+<li><a href="https://developers.google.com/maps/documentation/geocoding/" target="_blank">Google Gmap</a>&nbsp;- The default service used since it doesn't require an api key </li>
+<li><a href="http://wiki.openstreetmap.org/wiki/Nominatim" target="_blank">Open Streets Map</a>&nbsp;- No Api key required </li>
+<li><a href="http://msdn.microsoft.com/en-us/library/ff701711.aspx" target="_blank">Bing</a>&nbsp;- API key required </li>
+<li><a href="http://www.mapquestapi.com/geocoding/" target="_blank">MapQuest</a>&nbsp;- API key required </li>
+</ul>
+<p>This library is in alpha.</p>
+<p>Common Usage Scenarios:</p>
+<p><strong>Default Usage:</strong></p>
+<div style="color: black; background-color: white;">
+<pre><span style="color: blue;">double</span> lat;
+<span style="color: blue;">double</span> lng;
+
+IGeoCodeResult GeoCoderResult = <span style="color: blue;">new</span> GeoCodeResult(); 
+Target = g.GetCoordinates(<span style="color: #a31515;">"Austin, TX"</span>);  // defaults to Google's GMap Service
+<span style="color: blue;">if</span> (GeoCoderResult.HasValue) {
+  lat = Target.Latitude;
+  lng = Target.Longitude;   
+}</pre>
+</div>
+<p><strong>Specify a Different Service:</strong></p>
+<div style="color: black; background-color: white;">
+<pre><span style="color: blue;">double</span> lat;
+<span style="color: blue;">double</span> lng;
+Lucuma.IGeoCodeResult Target = <span style="color: blue;">new</span> GeoCodeResult();
+
+GeoCoder gc = <span style="color: blue;">new</span> GeoCoder();
+gc.AddProvider(<span style="color: blue;">new</span> OpenStreetMap()); &nbsp;</pre>
+<pre><span style="font-size: 1em;">Target = gc.GetCoordinates(</span><span style="color: #a31515;">"Austin, TX"</span><span style="font-size: 1em;">);</span></pre>
+<pre><span style="color: blue;">if</span> (Target.HasValue) {
+  lat = Target.Latitude;
+  lng = Target.Longitude;
+}
+
+</pre>
+</div>
+<p><strong>Specify a Service that Requires a Key:</strong></p>
+<div style="color: black; background-color: white;">
+<pre>GeoCoder gc = <span style="color: blue;">new</span> GeoCoder();
+BingMapConfig bmc = <span style="color: blue;">new</span> BingMapConfig()
+   .SetKey(<span style="color: #a31515;">"YOUR-BING-API-KEY"</span>);
+
+gc.AddProvider(<span style="color: blue;">new</span> BingMap(bmc)); 
+IGeoCodeResult Target = <span style="color: blue;">new</span> GeoCodeResult();
+Target = gc.GetCoordinates(<span style="color: #a31515;">"Austin, TX"</span>);
+</pre>
+</div>
+<p><strong>Use a backup service in case primary fails:</strong></p>
+<div style="color: black; background-color: white;">
+<pre>IGeoCodeResult Target = <span style="color: blue;">new</span><span style="font-size: 1em;"> GeoCodeResult();</span></pre>
+</div>
+<div style="color: black; background-color: white;">
+<pre><span style="color: green;">// set google map to bad url so it fails</span>
+GoogleGmapConfig gmc =
+   <span style="color: blue;">new</span> GoogleGmapConfig()
+         .SetUrl(<span style="color: #a31515;">"http://madps.googleapis.com/maps/api/geocode/json?address={0}&amp;sensor=true"</span>);
+
+GeoCoder gc = <span style="color: blue;">new</span> GeoCoder()
+  .AddProvider(<span style="color: blue;">new</span> GoogleGmap(gmc))
+  .AddProvider(<span style="color: blue;">new</span> OpenStreetMap());
+
+Target = gc.GetCoordinates(<span style="color: #a31515;">"Austin, TX"</span><span style="font-size: 1em;">);</span></pre>
+</div>
+<p><strong>Use individual Service without fancy backup:</strong></p>
+<div style="color: black; background-color: white;">
+<pre>OpenStreetMap o = <span style="color: blue;">new</span><span style="font-size: 1em;"> OpenStreetMap();</span></pre>
+</div>
+<div style="color: black; background-color: white;">
+<pre>IGeoCodeResult Target = <span style="color: blue;">new</span> GeoCodeResult();
+Target = o.GetCoordinates(<span style="color: #a31515;">"Austin, TX"</span><span style="font-size: 1em;">);</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>There are several areas that will change but overall it could be used in most simple scenarios where you just need to convert an address/location to latitude and longitude.</p>
+<p>Please NOTE that some of these services require you to get a key in order to use them and that each library may or may not have some terms that govern the use of the library. &nbsp;Please take care to read the terms of the service you are using so that you  don't get banned from its use.</p>
+</body>
+</html>

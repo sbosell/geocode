@@ -1,0 +1,1 @@
+..\.nuget\nuget.exe pack GeoCode.csproj -OutputDirectory ..\NuGetExport

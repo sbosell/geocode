@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="style.css" rel="stylesheet"/>
+
+    <script src="/bundles/modernizr?v=jmdBhqkI3eMaPZJduAyIYBj7MpXrGd2ZqmHAOSNeYcg1"></script>
+
+
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-743910-36']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+</script>
+
+</head>
+<body>
+    
+
+<h2>GeoCode Example - Nodejs and Express</h2>
+<p>
+    These examples make an api post back to this project which returns the result.  Try querying springfield on the google or paris to see multiple results.  The red icon is the first result.  The c# example is located at
+    <a href='http://multigeocoder.azurewebsites.net/' target="_blank">http://multigeocoder.azurewebsites.net </a>
+</p>
+
+
+<div>
+Enter Address: <input id="Address" name="Address" type="text" value="Austin, TX" /><br />
+Select Provider: <select id="Providers" name="Providers"><option value="Google">Google</option>
+<option value="BingKEY">Bing</option>
+<option value="MapQuestKEY">MapQuest</option>
+<option value="Open Streets">Open Streets</option>
+<option value="CloudMadeKEY">Cloud Made</option>
+<option value="YahooPlacesKEY">Yahoo Places</option>
+</select>  <br />
+Apikey: <input class="nokey" id="ApiKey" name="ApiKey" type="text" value="" /> <span id="apikeytext">Not Required</span> <br />
+    <button id="doit">Get Coordinates</button>
+</div>
+<div id="results">
+    Latitude: <span id="latitude"></span>
+    Longitude: <span id="longitude"></span>
+</div>
+<div id="message">
+
+</div>
+
+<div id="map" ></div>
+
+<div id="code">
+    Here is the node serverside code that does all the geocoding magic.  This defaults to google's
+    geocoder but you could just as easily use any of the other ones including yahoo boss goe services.
+
+
+    <!-- code formatted by http://manoli.net/csharpformat/ -->
+<pre class="csharpcode">
+var http = require('http')
+var express = require('express');
+var GeoCoder = require('./geocoder.js');
+var port = process.env.PORT || 1337;
+
+var app =  express();
+
+var g = new GeoCoder();
+
+app.use(express.static(__dirname + '/public'))
+app.use(express.bodyParser());
+
+
+app.post('/GeoCode/Query', function(req, res){
+    //Query, Providers, Key
+  var config, provider;
+  var k = req.body.Key;
+  var q = req.body.Query;
+  var p = req.body.Providers;
+  var g;
+  switch (p) {
+      case 'Google':
+          config = new GoogleGmapProviderConfig();
+          provider = new GoogleGmap();
+          break;
+      case 'MapQuestKEY':
+          config = new MapQuestProviderConfig().SetKey(k);
+          provider = new MapQuest(config);
+          break;
+      case 'Open Streets':
+          config = new OpenStreetsProviderConfig();
+          provider = new OpenStreets(config);
+          break;
+      case 'CloudMakeKEY':
+          config = new CloudMadeProviderConfig().SetKey(k);
+          provider = new CloudMade(config);
+          break;
+      case 'YahooPlacesKEY':
+          config = new YahooPlaceFinderProviderConfig().SetKey(k);
+          provider = new YahooPlaceFinder(config);
+          break;
+      case "BingKEY":
+          config = new BingMapProviderConfig().SetKey(k);
+          provider = new BingMap(config);
+          break;
+  }
+  g = new GeoCoder(provider);
+
+  g.GetCoordinates(q, function(data){
+  		res.send(data.data);
+  })
+  
+});
+
+app.listen(port);
+
+
+    
+</pre>
+
+
+</div>
+
+
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script src="site.js" type="text/javascript"></script>
+
+    
+</body>
+</html>

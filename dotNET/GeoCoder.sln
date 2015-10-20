@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoCode", "GeoCode\GeoCode.csproj", "{C70A30EF-B2F6-4E81-B810-E41CBCCB9032}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoCodeTest", "GeoCodeTest\GeoCodeTest.csproj", "{5C2A9478-6DFF-4DFE-82A5-BB815A01EDA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoCodeExample", "GeoCodeExample\GeoCodeExample.csproj", "{95E13936-94A6-4BD7-9589-B677E260F219}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C70A30EF-B2F6-4E81-B810-E41CBCCB9032}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C70A30EF-B2F6-4E81-B810-E41CBCCB9032}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C70A30EF-B2F6-4E81-B810-E41CBCCB9032}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C70A30EF-B2F6-4E81-B810-E41CBCCB9032}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C2A9478-6DFF-4DFE-82A5-BB815A01EDA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C2A9478-6DFF-4DFE-82A5-BB815A01EDA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C2A9478-6DFF-4DFE-82A5-BB815A01EDA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C2A9478-6DFF-4DFE-82A5-BB815A01EDA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95E13936-94A6-4BD7-9589-B677E260F219}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95E13936-94A6-4BD7-9589-B677E260F219}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95E13936-94A6-4BD7-9589-B677E260F219}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95E13936-94A6-4BD7-9589-B677E260F219}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
