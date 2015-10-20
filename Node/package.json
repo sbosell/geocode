@@ -19,6 +19,9 @@
   "keywords": [
     "Geocode"
   ],
+  "engines": {
+    "node": ">=0.6.14"
+  },
   "author": "Sam Bosell",
   "license": "ISC"
 }
