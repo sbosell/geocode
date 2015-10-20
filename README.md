@@ -2,6 +2,8 @@ Multiple Serverside Geocoder - Beta Release
 
 NuGet Download: https://nuget.org/packages/Lucuma.GeoCode/
 
+Sample Application: http://geocoder.azurewebsites.net/
+
 This is a serverside wrapper library for .Net and Nodejs (very dirty and alpha) to some common geocoding services that allow the conversion of an address/place into its latitude and longitude from the server (not client/javascript).  This library in its current form returns basic information (latitude and longitude) and only returns some basic information such as accuracy, address, etc when available or applicable.  It will also return a list of the ambiguous results when available.
 
 It currently supports 6 free services (some require api key) and allows you to specify failovers in the event you get throttled.  Many projects and websites show maps and allow users to enter city,state and/or location to display them and it is a general requirement to geocode that information first.  If you need to do it on the server side, this library will help you.
