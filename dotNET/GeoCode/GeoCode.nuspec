@@ -9,13 +9,11 @@
     <projectUrl>http://github.com/sbosell/geocode</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
-        This is a serverside wrapper library to some common geocoding services that allow the conversion of an address/place into its latitude and longitude from the server (not client/javascript).  This library in its current form returns basic information (latitude and longitude) and only returns some basic information such as accuracy, address, etc when available or applicable. 
-
+        This is a serverside wrapper (.NET and NodeJS) library to some common geocoding services that allow the conversion of an address/place into its latitude and longitude from the server (not client/javascript).  This library in its current form returns basic information (latitude and longitude) and only returns some basic information such as accuracy, address, etc when available or applicable.
         It currently supports the following services: Google GMap, Bing, Open Streets, MapQuest, Yahoo Place Finder, Yahoo BOSS GEO Services, and Cloudmade.
     </description>
     <releaseNotes>
-        Alpha Release.       This is a serverside wrapper library to some common geocoding services that allow the conversion of an address/place into its latitude and longitude from the server (not client/javascript).  This library in its current form returns basic information (latitude and longitude) and only returns some basic information such as accuracy, address, etc when available or applicable.
-        It currently supports the following services: Google GMap, Bing, Open Streets, MapQuest, Yahoo Place Finder, Yahoo BOSS GEO Services, and Cloudmade.
+        Removal of System.Web dependency
     </releaseNotes>
     <copyright>Copyright 2015</copyright>
     <tags>Geocoding</tags>
