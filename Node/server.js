@@ -2,13 +2,13 @@ var http = require('http')
 var express = require('express');
 var GeoCoder = require('./geocoder.js');
 var port = process.env.PORT || 1337;
-
+var bodyParser = require('body-parser');
 var app =  express();
 
 var g = new GeoCoder();
 
 app.use(express.static(__dirname + '/public'))
- app.use(express.bodyParser());
+ app.use(bodyParser());
 
 app.post('/GeoCode/Query', function(req, res){
     //Query, Providers, Key
