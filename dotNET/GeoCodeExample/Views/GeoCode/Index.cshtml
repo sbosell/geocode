@@ -2,31 +2,50 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>GeoCode Example</h2>
-<h3>http://github.com/sbosell/geocoder</h3>
-<p>
-    These examples make an api post back to this project which returns the result.  Try querying springfield on the google or paris to see multiple results.  The red icon is the first result.
-</p>
-
-
-<div>
-Enter Address: @Html.TextBox("Address", "Austin, TX")<br />
-Select Provider: @Html.DropDownList("Providers", (List<SelectListItem>) ViewBag.Providers)  <br />
-Apikey: @Html.TextBox("ApiKey", "", new {@class="nokey"}) <span id="apikeytext">Not Required</span> <br />
-    <button id="doit">Get Coordinates</button>
+<div class="page-header">
+<div class="container">
+    <h1>Multi Geocoder Example<small><a href="http://github.com/sbosell/geocoder">http://github.com/sbosell/geocoder</a></small></h1>
 </div>
-<div id="results">
-    Latitude: <span id="latitude"></span>
-    Longitude: <span id="longitude"></span>
 </div>
-<div id="message">
+<div class="content">
+    <div class="jumbotron container">
+        <p>
+            These examples make an api post back to a simple controller which returns the geocoded result.  
+            Try querying springfield on the google or paris to see multiple results.  The red icon is the first result.
+<br /><br />
+            ps.  There is a nodejs demo:  <a href="http://geocodenode.azurewebsites.net" target="_blank">http://geocodenode.azurewebsites.net</a>
+        </p>
+        <div class="">
+            <form>
+                <div class="form-group">
+                    <label >Address</label>
+                    @Html.TextBox("Address", "Austin, TX", new {@class="form-control"})
+                </div>
+                <div class="form-group">
+                    <label>Geo Provider</label>
+                    @Html.DropDownList("Providers", (List<SelectListItem>
+                        ) ViewBag.Providers, new {@class="form-control"})
+                </div>
+               <div class="form-group">
+                   Apikey: @Html.TextBox("ApiKey", "", new {@class="nokey form-control"}) <span id="apikeytext">Not Required</span>
+               </div>
+                    
+                    <button id="doit" class="btn btn-success">Get Coordinates</button>
+            </form>
+        </div>
+        <div id="results">
+            Latitude: <span id="latitude" class="label label-default"></span>
+            Longitude: <span id="longitude" class="label label-default"></span>
+        </div>
+        <div id="message">
 
+        </div>
+
+        <div id="map"></div>
+    </div>
 </div>
 
-<div id="map" ></div>
-
-<div id="code">
+<div id="code" class="container">
     Here is the controller that does all the magic:
 
 
