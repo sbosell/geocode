@@ -72,7 +72,7 @@
         $results.hide();
         $message.hide();
         $.ajax({
-            url: '/GeoCode/Query',
+            url: 'api/Geo/Query',
             type: 'POST',
             data: { Query: $Address.val(), Providers: $Providers.val(), Key: $ApiKey.val() },
             success: function (data) {
