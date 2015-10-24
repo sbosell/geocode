@@ -70,20 +70,7 @@ input.key
     display: inline-block;
 }
 
-#results
-{
-    display: none;
-}
 
-#message
-{
-    display: none;
-}
-
-apikeytext
-{
-    display: none;
-}
 
 #map
 {

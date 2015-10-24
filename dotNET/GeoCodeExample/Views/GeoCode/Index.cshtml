@@ -1,7 +1,12 @@
-﻿@{
+﻿@using Newtonsoft.Json;
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script>
+    var providers = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Providers)));
+</script>
+
 <div class="page-header">
 <div class="container">
     <h1>Multi Geocoder Example</h1>
@@ -20,30 +25,31 @@
             <form>
                 <div class="form-group">
                     <label >Address</label>
-                    @Html.TextBox("Address", "Austin, TX", new {@class="form-control"})
+                    @Html.TextBox("Address", "Austin, TX", new {@class="form-control", ng_model="address"})
                 </div>
                 <div class="form-group">
                     <label>Geo Provider</label>
-                    @Html.DropDownList("Providers", (List<SelectListItem>
-                        ) ViewBag.Providers, new {@class="form-control"})
+                    <select name="Providers" class="form-control" ng-model="provider" ng-options="provider.Text for provider in providers" ng-init="provider = providers[0]"></select>
+                    
                 </div>
-               <div class="form-group">
-                   Apikey: @Html.TextBox("ApiKey", "", new {@class="nokey form-control"}) <span id="apikeytext">Not Required</span>
+               <div class="form-group" >
+                   Apikey: @Html.TextBox("ApiKey", "", new {@class="nokey form-control", ng_model="apiKey", ng_class="{nokey:getKey()}"}) <span id="apikeytext">Not Required</span>
                </div>
                     
-                    <button id="doit" class="btn btn-success">Get Coordinates</button>
+                    <button id="doit" class="btn btn-success" ng-click="go()">Get Coordinates</button>
             </form>
         </div>
-        <div id="results">
-            Latitude: <span id="latitude" class="label label-default"></span>
-            Longitude: <span id="longitude" class="label label-default"></span>
+        
+        <div id="results" ng-show="hasResults">
+            Latitude: <span id="latitude" class="label label-default">{{latitude}}</span>
+            Longitude: <span id="longitude" class="label label-default">{{longitude}}</span>
         </div>
 <br />
-        <div id="message">
-
+         <div id="message" ng-show="hasMessage">
+             {{message}}
         </div>
 
-        <div id="map"></div>
+        <div id="map" class="map" data="data"></div>
     </div>
 </div>
 
